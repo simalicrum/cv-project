@@ -13,13 +13,13 @@ const Info = () => {
   const [emailform, setEmailform] = useState(false);
   const onSubmitForm = (e) => {
     e.preventDefault();
-    this.setState({ [e.target.id]: false });
+    setNameform(false);
   };
   const handleClick = (form) => {
-    this.setState({ [form]: true });
+    setNameform(true);
   };
   const handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    setName(e.target.value);
   };
   const renderEntry = (formName, name, stateEntry, stateFormEntry) => {
     if (stateFormEntry) {
