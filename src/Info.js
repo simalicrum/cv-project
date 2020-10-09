@@ -1,40 +1,35 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class Info extends Component {
-  constructor() {
-    super();
-    this.state = {
-      name: "Enter name",
-      nameform: false,
-      address: "Enter street address",
-      addressform: false,
-      cityprovince: "Enter city and province",
-      cityprovinceform: false,
-      phone: "Enter phone number",
-      phoneform: false,
-      email: "Enter email address",
-      emailform: false,
-    };
-  }
-  onSubmitForm = (e) => {
+const Info = () => {
+  const [name, setName] = useState("Enter name");
+  const [nameform, setNameform] = useState(false);
+  const [address, setAddress] = useState("Enter street address");
+  const [addressform, setAddressform] = useState(false);
+  const [cityprovince, setCityprovince] = useState("Enter city and province");
+  const [cityprovinceform, setCityprovinceform] = useState(false);
+  const [phone, setPhone] = useState("Enter phone number");
+  const [phoneform, setPhoneform] = useState(false);
+  const [email, setEmail] = useState("Enter email address");
+  const [emailform, setEmailform] = useState(false);
+  const onSubmitForm = (e) => {
     e.preventDefault();
     this.setState({ [e.target.id]: false });
   };
-  handleClick = (form) => {
+  const handleClick = (form) => {
     this.setState({ [form]: true });
   };
-  handleChange = (e) => {
+  const handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  renderEntry = (formName, name, stateEntry, stateFormEntry) => {
+  const renderEntry = (formName, name, stateEntry, stateFormEntry) => {
     if (stateFormEntry) {
       return (
-        <form onSubmit={this.onSubmitForm} id={formName}>
+        <form onSubmit={onSubmitForm} id={formName}>
           <input
             type="text"
             name={name}
             value={stateEntry}
-            onChange={this.handleChange}
+            onChange={handleChange}
           ></input>
           <button type="submit">Submit</button>
         </form>
@@ -43,80 +38,58 @@ class Info extends Component {
       return stateEntry;
     }
   };
-  render() {
-    return (
-      <div>
-        <h1
-          id="name-div"
-          onClick={() => {
-            this.handleClick("nameform");
-          }}
-        >
-          {this.renderEntry(
-            "nameform",
-            "name",
-            this.state.name,
-            this.state.nameform
-          )}
-        </h1>
-        <b
-          id="address-div"
-          onClick={() => {
-            this.handleClick("addressform");
-          }}
-        >
-          {this.renderEntry(
-            "addressform",
-            "address",
-            this.state.address,
-            this.state.addressform
-          )}
-        </b>
-        <br />
-        <b
-          id="cityprovince-div"
-          onClick={() => {
-            this.handleClick("cityprovinceform");
-          }}
-        >
-          {this.renderEntry(
-            "cityprovinceform",
-            "cityprovince",
-            this.state.cityprovince,
-            this.state.cityprovinceform
-          )}
-        </b>
-        <br />
-        <b
-          id="phone-div"
-          onClick={() => {
-            this.handleClick("phoneform");
-          }}
-        >
-          {this.renderEntry(
-            "phoneform",
-            "phone",
-            this.state.phone,
-            this.state.phoneform
-          )}
-        </b>
-        <br />
-        <b
-          id="email-div"
-          onClick={() => {
-            this.handleClick("emailform");
-          }}
-        >
-          {this.renderEntry(
-            "emailform",
-            "email",
-            this.state.email,
-            this.state.emailform
-          )}
-        </b>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <h1
+        id="name-div"
+        onClick={() => {
+          handleClick("nameform");
+        }}
+      >
+        {renderEntry("nameform", "name", name, nameform)}
+      </h1>
+      <b
+        id="address-div"
+        onClick={() => {
+          handleClick("addressform");
+        }}
+      >
+        {renderEntry("addressform", "address", address, addressform)}
+      </b>
+      <br />
+      <b
+        id="cityprovince-div"
+        onClick={() => {
+          handleClick("cityprovinceform");
+        }}
+      >
+        {renderEntry(
+          "cityprovinceform",
+          "cityprovince",
+          cityprovince,
+          cityprovinceform
+        )}
+      </b>
+      <br />
+      <b
+        id="phone-div"
+        onClick={() => {
+          handleClick("phoneform");
+        }}
+      >
+        {renderEntry("phoneform", "phone", phone, phoneform)}
+      </b>
+      <br />
+      <b
+        id="email-div"
+        onClick={() => {
+          handleClick("emailform");
+        }}
+      >
+        {renderEntry("emailform", "email", email, emailform)}
+      </b>
+    </div>
+  );
+};
 
 export default Info;
