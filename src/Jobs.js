@@ -1,23 +1,23 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class Jobs extends Component {
-  constructor() {
-    super();
-    this.state = {
-      jobs: [],
-      jobsform: false,
-      title: "",
-      company: "",
-      from: "",
-      to: "",
-    };
-  }
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+const Jobs = () => {
+  const [jobs, setJobs] = useState([
+    {
+      title: "Widget Inspector",
+      company: "123 Company",
+      from: "2010",
+      to: "2015",
+    },
+  ]);
+  const [jobsform, setJobsform] = useState(false);
+  const [title, setTitle] = useState("");
+  const [company, setCompany] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [mouseOverButton, setMouseOverButton] = useState(false);
 
-  renderJobs = () => {
-    return this.state.jobs.map((i) => (
+  const renderJobs = () => {
+    return jobs.map((i) => (
       <div>
         <h3>
           {i.title} at {i.company}
@@ -28,59 +28,69 @@ class Jobs extends Component {
       </div>
     ));
   };
-  onSubmitJobs = (e) => {
+
+  const onSubmitJobs = (e) => {
     e.preventDefault();
-    this.setState({
-      jobs: this.state.jobs
+    setJobs(
+      jobs
         .map((i) => {
           return { title: i.title, company: i.company, from: i.from, to: i.to };
         })
         .concat({
-          title: this.state.title,
-          company: this.state.company,
-          from: this.state.from,
-          to: this.state.to,
-        }),
-      jobsform: false,
-      title: "",
-      company: "",
-      from: "",
-      to: "",
-    });
+          title: title,
+          company: company,
+          from: from,
+          to: to,
+        })
+    );
+    setJobsform(false);
+    setTitle("");
+    setCompany("");
+    setFrom("");
+    setTo("");
   };
-  renderJobsForm = () => {
-    if (this.state.jobsform) {
+
+  const renderJobsForm = () => {
+    if (jobsform) {
       return (
-        <form onSubmit={this.onSubmitJobs}>
+        <form onSubmit={onSubmitJobs}>
           <label>Job title: </label>
           <input
             type="text"
             name="title"
-            value={this.state.title}
-            onChange={this.handleChange}
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
           ></input>
           <br />
           <label>Company: </label>
           <input
             type="text"
             name="company"
-            value={this.state.company}
-            onChange={this.handleChange}
+            value={company}
+            onChange={(e) => {
+              setCompany(e.target.value);
+            }}
           ></input>
           <br />
           <label>Worked from: </label>
           <input
             type="text"
             name="from"
-            value={this.state.from}
-            onChange={this.handleChange}
+            value={from}
+            onChange={(e) => {
+              setFrom(e.target.value);
+            }}
           ></input>
           <label> to </label>
           <input
             type="text"
             name="to"
-            value={this.state.to}
-            onChange={this.handleChange}
+            value={to}
+            onChange={(e) => {
+              setTo(e.target.value);
+            }}
           ></input>
           <br />
           <button type="submit">Add</button>
@@ -90,13 +100,17 @@ class Jobs extends Component {
       return (
         <div
           id="jobs-add"
-          onMouseEnter={this.mouseEnterJobs}
-          onMouseLeave={this.mouseLeaveJobs}
+          onMouseEnter={() => {
+            setMouseOverButton(true);
+          }}
+          onMouseLeave={() => {
+            setMouseOverButton(false);
+          }}
         >
-          {this.state.isMouseInsideJobs ? (
+          {mouseOverButton ? (
             <button
               onClick={() => {
-                this.setState({ jobsform: true });
+                setJobsform(true);
               }}
             >
               Add job
@@ -106,22 +120,15 @@ class Jobs extends Component {
       );
     }
   };
-  mouseEnterJobs = () => {
-    this.setState({ isMouseInsideJobs: true });
-  };
-  mouseLeaveJobs = () => {
-    this.setState({ isMouseInsideJobs: false });
-  };
-  render() {
-    return (
-      <div>
-        {" "}
-        <h2 id="jobs-title">Job Experience</h2>
-        <div id="jobs-div">{this.renderJobs()}</div>
-        <div>{this.renderJobsForm()}</div>
-      </div>
-    );
-  }
-}
+
+  return (
+    <div>
+      {" "}
+      <h2 id="jobs-title">Job Experience</h2>
+      <div id="jobs-div">{renderJobs()}</div>
+      <div>{renderJobsForm()}</div>
+    </div>
+  );
+};
 
 export default Jobs;
