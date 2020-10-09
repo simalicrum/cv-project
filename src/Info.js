@@ -11,17 +11,14 @@ const Info = () => {
   const [phoneform, setPhoneform] = useState(false);
   const [email, setEmail] = useState("Enter email address");
   const [emailform, setEmailform] = useState(false);
-  const onSubmitForm = (e) => {
-    e.preventDefault();
-    setNameform(false);
-  };
-  const handleClick = (form) => {
-    setNameform(true);
-  };
-  const handleChange = (e) => {
-    setName(e.target.value);
-  };
-  const renderEntry = (formName, name, stateEntry, stateFormEntry) => {
+
+  const renderEntry = (
+    formName,
+    name,
+    stateEntry,
+    stateFormEntry,
+    onSubmitForm
+  ) => {
     if (stateFormEntry) {
       return (
         <form onSubmit={onSubmitForm} id={formName}>
@@ -29,7 +26,7 @@ const Info = () => {
             type="text"
             name={name}
             value={stateEntry}
-            onChange={handleChange}
+            onChange={formName}
           ></input>
           <button type="submit">Submit</button>
         </form>
@@ -43,50 +40,100 @@ const Info = () => {
       <h1
         id="name-div"
         onClick={() => {
-          handleClick("nameform");
+          setNameform(true);
         }}
       >
-        {renderEntry("nameform", "name", name, nameform)}
+        {renderEntry(
+          (e) => {
+            setName(e.target.value);
+          },
+          "name",
+          name,
+          nameform,
+          (e) => {
+            e.preventDefault();
+            setNameform(false);
+          }
+        )}
       </h1>
       <b
         id="address-div"
         onClick={() => {
-          handleClick("addressform");
+          setAddressform(true);
         }}
       >
-        {renderEntry("addressform", "address", address, addressform)}
+        {renderEntry(
+          (e) => {
+            setAddress(e.target.value);
+          },
+          "address",
+          address,
+          addressform,
+          (e) => {
+            e.preventDefault();
+            setAddressform(false);
+          }
+        )}
       </b>
       <br />
       <b
         id="cityprovince-div"
         onClick={() => {
-          handleClick("cityprovinceform");
+          setCityprovinceform(true);
         }}
       >
         {renderEntry(
-          "cityprovinceform",
+          (e) => {
+            setCityprovince(e.target.value);
+          },
           "cityprovince",
           cityprovince,
-          cityprovinceform
+          cityprovinceform,
+          (e) => {
+            e.preventDefault();
+            setCityprovinceform(false);
+          }
         )}
       </b>
       <br />
       <b
         id="phone-div"
         onClick={() => {
-          handleClick("phoneform");
+          setPhoneform(true);
         }}
       >
-        {renderEntry("phoneform", "phone", phone, phoneform)}
+        {renderEntry(
+          (e) => {
+            setPhone(e.target.value);
+          },
+          "phone",
+          phone,
+          phoneform,
+          (e) => {
+            e.preventDefault();
+            setPhoneform(false);
+          }
+        )}
       </b>
       <br />
       <b
         id="email-div"
         onClick={() => {
-          handleClick("emailform");
+          setEmailform(true);
         }}
       >
-        {renderEntry("emailform", "email", email, emailform)}
+        {renderEntry(
+          (e) => {
+            setEmail(e.target.value);
+          },
+          "email",
+          email,
+          emailform,
+          (e) => {
+            e.preventDefault();
+            setEmailform(false);
+          }
+        )}
       </b>
     </div>
   );
